@@ -51,12 +51,10 @@ console.log(myBuick.wheels);
 console.log(myBuick.model);
 
 // Part 3: Creating a Generic Class
-
 class NCycle<T> {
   make: T;
   model: T;
   wheels: number;
-  status: "started" | "stopped" = "stopped";
 
   constructor(make: T, model: T, wheels: number) {
     this.make = make;
@@ -64,56 +62,30 @@ class NCycle<T> {
     this.wheels = wheels;
   }
 
-  start(): void {
-    this.status = "started";
-  }
-
-  stop(): void {
-    this.status = "stopped";
-  }
-
   print(index: number = 0): void {
-    if (!Array.isArray(this.make) && !Array.isArray(this.model)) {
+    if (Array.isArray(this.make) && Array.isArray(this.model)) {
+      if (index < this.make.length && index < this.model.length) {
+        console.log(`This NCycle has a ${this.make[index]} ${this.model[index]} at ${index}.`);
+      } else {
+        console.log("This NCycle was not created properly.");
+      }
+    } else {
       console.log(`This is a ${this.make} ${this.model} NCycle.`);
-    }
-
-    else if (
-      Array.isArray(this.make) &&
-      Array.isArray(this.model) &&
-      index < this.make.length &&
-      index < this.model.length
-    ) {
-      console.log(
-        `This NCycle has a ${this.make[index]} ${this.model[index]} at ${index}.`
-      );
-    }
-
-    else {
-      console.log("This NCycle was not created properly.");
     }
   }
 
   printAll(): void {
-    if (!Array.isArray(this.make) && !Array.isArray(this.model)) {
-      console.log(`This is a ${this.make} ${this.model} NCycle.`);
-    }
-
-    else if (Array.isArray(this.make) && Array.isArray(this.model)) {
+    if (Array.isArray(this.make) && Array.isArray(this.model)) {
       for (let i = 0; i < this.make.length && i < this.model.length; i++) {
-        console.log(
-          `This NCycle has a ${this.make[i]} ${this.model[i]} at ${i}.`
-        );
+        console.log(`This NCycle has a ${this.make[i]} ${this.model[i]} at ${i}.`);
       }
-    }
-
-    else {
-      console.log("This NCycle was not created properly.");
+    } else {
+      console.log(`This is a ${this.make} ${this.model} NCycle.`);
     }
   }
 }
 
 // Part 4: Testing
-
 // Rudimentary testing Code, not part of the assignment
 const testCycle1 = new NCycle<number>(1, 2, 3);
 testCycle1.print();
@@ -145,5 +117,5 @@ function add(x: number, y: number): number {
 
 add(testCycle1.make, testCycle5.model[1]);
 // Error expected here
-// add(testCycle2.make, testCycle4.model[1]);
+add(testCycle2.make, testCycle4.model[1]);
 
